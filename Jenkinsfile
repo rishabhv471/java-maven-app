@@ -38,22 +38,57 @@
 // }
 
 
+// pipeline {
+
+//     agent any
+
+//     stages {
+
+
+//         stage("build"){
+
+//             steps{
+//                 echo 'building the application'
+//             }
+//         }
+//         stage("test"){
+//             steps{
+//                 echo 'testing the application..'
+//             }
+//         }
+//          stage("deploy"){
+//             steps{
+//                 echo 'deploying the application..'
+//             }
+//         }
+
+//     }
+// }
+
+
+
 pipeline {
 
     agent any
+    tools{
+        maven 'Maven'
+    }
 
     stages {
-
-
-        stage("build"){
+        stage("build jar"){
 
             steps{
                 echo 'building the application'
+                sh 'mvn package'
             }
         }
-        stage("test"){
+        stage("build image "){
             steps{
-                echo 'testing the application..'
+                echo 'building the docker image...'
+                withCredentials([usernamePassword(credentialsId: '33a4ee85-aa7d-4cce-8c7b-4925a48b18d4' , passwordVariable: 'PASS' ,usernameVariable : 'USER')])
+                    sh 'docker buit -t rishabhv471/test:test-1.0 .'
+                    sh "echo $PASS | docker login - u $USER --password-stdin"
+                    sh 'docker push rishabhv471/test:test-1.0'
             }
         }
          stage("deploy"){
