@@ -85,7 +85,7 @@ pipeline {
         stage("build image "){
             steps{
                 echo 'building the docker image...'
-                withCredentials([usernamePassword(credentialsId: '8a21993c-d97c-45d6-bf17-53236919adc4' , passwordVariable: 'PASS' ,usernameVariable : 'USER')])
+                withCredentials([usernamePassword(credentialsId: '7a225bd0-8785-487c-ae65-93e415cbb7db' , passwordVariable: 'PASS' ,usernameVariable : 'USER')])
                     sh 'docker buit -t rishabhv471/test:test-1.0 .'
                     sh "echo $PASS | docker login - u $USER --password-stdin"
                     sh 'docker push rishabhv471/test:test-1.0'
