@@ -67,61 +67,61 @@
 
 
 
-// pipeline {
+pipeline {
 
-//     agent any
-//     tools{
-//         maven 'Maven'
-//     }
+    agent any
+    tools{
+        maven 'Maven'
+    }
 
-//     stages {
-//         stage("build jar"){
+    stages {
+        stage("build jar"){
 
-//             steps{
-//                 echo 'building the application'
-//                 sh 'mvn package'
-//             }
-//         }
-//         stage("build image "){
-//             steps{
-//                 echo 'building the docker image...'
-//                 withCredentials([usernamePassword(credentialsId: '7a225bd0-8785-487c-ae65-93e415cbb7db' , passwordVariable: 'PASS' ,usernameVariable : 'USER')])
-//                     sh 'docker buit -t rishabhv471/test:test-1.0 .'
-//                     sh "echo $PASS | docker login - u $USER --password-stdin"
-//                     sh 'docker push rishabhv471/test:test-1.0'
-//             }
-//         }
-//          stage("deploy"){
-//             steps{
-//                 echo 'deploying the application..'
-//             }
-//         }
+            steps{
+                echo 'building the application'
+                sh 'mvn package'
+            }
+        }
+        stage("build image "){
+            steps{
+                echo 'building the docker image...'
+                withCredentials([usernamePassword(credentialsId: '7a225bd0-8785-487c-ae65-93e415cbb7db' , passwordVariable: 'PASS' ,usernameVariable : 'USER')])
+                    sh 'docker buit -t rishabhv471/test:test-1.0 .'
+                    sh "echo $PASS | docker login - u $USER --password-stdin"
+                    sh 'docker push rishabhv471/test:test-1.0'
+            }
+        }
+         stage("deploy"){
+            steps{
+                echo 'deploying the application..'
+            }
+        }
 
-//     }
-// }
+    }
+}
 //vimal
 
 
-pipeline {
-    agent none
+// pipeline {
+//     agent none
 
-    stages {
-        stage('gitscm') {
-            agent {
-                label 'myslave1'
-            }
-            steps {
-                echo 'Building...'
-            }
-        }
+//     stages {
+//         stage('gitscm') {
+//             agent {
+//                 label 'myslave1'
+//             }
+//             steps {
+//                 echo 'Building...'
+//             }
+//         }
 
-        stage('test') {
-            agent {
-                label 'myslave1'
-            }
-            steps {
-                echo 'Testing...'
-            }
-        }
-    }
-}
+//         stage('test') {
+//             agent {
+//                 label 'myslave1'
+//             }
+//             steps {
+//                 echo 'Testing...'
+//             }
+//         }
+//     }
+// }
